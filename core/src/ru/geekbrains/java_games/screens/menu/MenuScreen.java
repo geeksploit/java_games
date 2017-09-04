@@ -6,7 +6,10 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
+
+import java.util.ArrayList;
 
 import ru.geekbrains.java_games.screens.stars.Star;
 import ru.geekuniversity.engine.Base2DScreen;
@@ -16,12 +19,10 @@ import ru.geekuniversity.engine.math.Rnd;
 
 public class MenuScreen extends Base2DScreen {
 
-    private static final float STAR_WIDTH = 0.01f;
-
     private Sprite2DTexture textureBackground;
     private TextureAtlas atlas;
     private Background background;
-    private Star star;
+    private StarField starField;
 
     public MenuScreen(Game game) {
         super(game);
@@ -33,6 +34,9 @@ public class MenuScreen extends Base2DScreen {
         textureBackground = new Sprite2DTexture("textures/bg.png");
         atlas = new TextureAtlas("textures/mainAtlas.pack");
         background = new Background(new TextureRegion(textureBackground));
+
+        starField = new StarField(atlas.findRegion("star"));
+
         TextureRegion regionStar = atlas.findRegion("star");
         float vx = Rnd.nextFloat(-0.005f, 0.005f);
         float vy = Rnd.nextFloat(-0.05f, -0.1f);
@@ -43,22 +47,28 @@ public class MenuScreen extends Base2DScreen {
     @Override
     protected void resize(Rect worldBounds) {
         background.resize(worldBounds);
-        star.resize(worldBounds);
+        starField.resize(worldBounds);
     }
 
     @Override
     protected void touchDown(Vector2 touch, int pointer) {
+
+        starField.touchDown(touch, pointer);
+
         star.touchDown(touch, pointer);
+
     }
 
     @Override
-    public void render (float delta) {
+    public void render(float delta) {
         update(delta);
         draw();
     }
 
     private void update(float deltaTime) {
-        star.update(deltaTime);
+
+        starField.update(deltaTime);
+
     }
 
     private void draw() {
@@ -66,12 +76,12 @@ public class MenuScreen extends Base2DScreen {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         batch.begin();
         background.draw(batch);
-        star.draw(batch);
+        starField.draw(batch);
         batch.end();
     }
 
     @Override
-    public void dispose () {
+    public void dispose() {
         textureBackground.dispose();
         atlas.dispose();
         super.dispose();
