@@ -144,4 +144,73 @@ public class MenuScreen extends Base2DScreen {
         }
     }
 
+    private class MenuButtons {
+
+        private ArrayList<Button> buttons;
+
+        MenuButtons(Button... newButtons) {
+
+            buttons = new ArrayList<Button>(2);
+            for (Button button : newButtons) {
+                addButton(button);
+            }
+
+        }
+
+        void addButton(Button newButton) {
+
+            buttons.add(newButton);
+
+        }
+
+        void resize(Rect worldBounds) {
+
+            for (Button button : buttons) {
+                button.resize(worldBounds);
+            }
+
+        }
+
+        void update(float deltaTime) {
+
+            for (Button button : buttons) {
+                button.update(deltaTime);
+            }
+
+        }
+
+        void draw(SpriteBatch spriteBatch) {
+
+            for (Button button : buttons) {
+                button.draw(spriteBatch);
+            }
+
+        }
+
+        void touchDown(Vector2 touch, int pointer) {
+
+            for (Button button : buttons) {
+                button.touchDown(touch, pointer);
+            }
+
+        }
+
+        public void touchUp(Vector2 touch, int pointer) {
+
+            for (Button button : buttons) {
+                button.touchUp(touch, pointer);
+            }
+
+        }
+
+        public void touchMove(Vector2 touch, int pointer) {
+
+            for (Button button : buttons) {
+                button.touchMove(touch, pointer);
+            }
+
+        }
+
+    }
+
 }
