@@ -76,4 +76,62 @@ public class MenuScreen extends Base2DScreen {
         atlas.dispose();
         super.dispose();
     }
+
+    private class StarField {
+
+        private static final float STAR_MIN_WIDTH = 0.01f;
+        private static final float STAR_MAX_WIDTH = STAR_MIN_WIDTH * 5;
+        private static final int STAR_MAX_AMOUNT = 1000;
+
+        private ArrayList<Star> stars;
+
+        StarField(TextureRegion regionStar) {
+
+            stars = new ArrayList<Star>(STAR_MAX_AMOUNT);
+
+            while (stars.size() < STAR_MAX_AMOUNT) {
+                float velocityX = Rnd.nextFloat(-0.005f, 0.005f);
+                float velocityY = Rnd.nextFloat(-0.05f, -0.1f);
+                // Tie star width to its velocity to give the star field a sense of depth.
+                float starWidth = MathUtils.clamp(
+                        (Math.abs(velocityX) + Math.abs(velocityY)) / 10,
+                        STAR_MIN_WIDTH, STAR_MAX_WIDTH);
+                stars.add(new Star(regionStar, velocityX, velocityY, starWidth));
+            }
+
+        }
+
+        void resize(Rect worldBounds) {
+
+            for (Star star : stars) {
+                star.resize(worldBounds);
+            }
+
+        }
+
+        void update(float deltaTime) {
+
+            for (Star star : stars) {
+                star.update(deltaTime);
+            }
+
+        }
+
+        void draw(SpriteBatch spriteBatch) {
+
+            for (Star star : stars) {
+                star.draw(spriteBatch);
+            }
+
+        }
+
+        void touchDown(Vector2 touch, int pointer) {
+
+            for (Star star : stars) {
+                star.touchDown(touch, pointer);
+            }
+
+        }
+    }
+
 }
