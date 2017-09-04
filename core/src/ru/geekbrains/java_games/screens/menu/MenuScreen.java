@@ -11,6 +11,9 @@ import com.badlogic.gdx.math.Vector2;
 
 import java.util.ArrayList;
 
+import ru.geekbrains.java_games.screens.buttons.Button;
+import ru.geekbrains.java_games.screens.buttons.ButtonExit;
+import ru.geekbrains.java_games.screens.buttons.ButtonPlay;
 import ru.geekbrains.java_games.screens.stars.Star;
 import ru.geekuniversity.engine.Base2DScreen;
 import ru.geekuniversity.engine.Sprite2DTexture;
@@ -37,25 +40,38 @@ public class MenuScreen extends Base2DScreen {
 
         starField = new StarField(atlas.findRegion("star"));
 
-        TextureRegion regionStar = atlas.findRegion("star");
-        float vx = Rnd.nextFloat(-0.005f, 0.005f);
-        float vy = Rnd.nextFloat(-0.05f, -0.1f);
-        float starWidth = STAR_WIDTH * Rnd.nextFloat(0.75f, 1f);
-        star = new Star(regionStar, vx, vy, starWidth);
+        Button play = new ButtonPlay(atlas.findRegion("btPlay"));
+        Button exit = new ButtonExit(atlas.findRegion("btExit"));
+        menuButtons = new MenuButtons(play, exit);
+
     }
 
     @Override
     protected void resize(Rect worldBounds) {
         background.resize(worldBounds);
         starField.resize(worldBounds);
+        menuButtons.resize(worldBounds);
     }
 
     @Override
     protected void touchDown(Vector2 touch, int pointer) {
 
         starField.touchDown(touch, pointer);
+        menuButtons.touchDown(touch, pointer);
 
-        star.touchDown(touch, pointer);
+    }
+
+    @Override
+    public void touchUp(Vector2 touch, int pointer) {
+
+        menuButtons.touchUp(touch, pointer);
+
+    }
+
+    @Override
+    protected void touchMove(Vector2 touch, int pointer) {
+
+        menuButtons.touchMove(touch, pointer);
 
     }
 
@@ -68,6 +84,7 @@ public class MenuScreen extends Base2DScreen {
     private void update(float deltaTime) {
 
         starField.update(deltaTime);
+        menuButtons.update(deltaTime);
 
     }
 
@@ -77,6 +94,7 @@ public class MenuScreen extends Base2DScreen {
         batch.begin();
         background.draw(batch);
         starField.draw(batch);
+        menuButtons.draw(batch);
         batch.end();
     }
 
