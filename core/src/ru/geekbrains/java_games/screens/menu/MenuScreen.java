@@ -26,6 +26,7 @@ public class MenuScreen extends Base2DScreen {
     private TextureAtlas atlas;
     private Background background;
     private StarField starField;
+    private MenuButtons menuButtons;
 
     public MenuScreen(Game game) {
         super(game);
