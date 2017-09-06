@@ -109,6 +109,10 @@ class MainShip extends Sprite {
         v.setZero();
     }
 
+    public float getVelocityX() {
+        return v.x;
+    }
+
     @Override
     public void update(float deltaTime) {
         pos.mulAdd(v, deltaTime);
