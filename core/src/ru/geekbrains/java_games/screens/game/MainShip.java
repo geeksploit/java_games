@@ -2,6 +2,7 @@ package ru.geekbrains.java_games.screens.game;
 
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 
 import ru.geekuniversity.engine.math.Rect;
@@ -111,5 +112,13 @@ class MainShip extends Sprite {
     @Override
     public void update(float deltaTime) {
         pos.mulAdd(v, deltaTime);
+        pos.x = MathUtils.clamp(pos.x, worldBounds.getLeft() + getHalfWidth(), worldBounds.getRight() - getHalfWidth());
+        pos.y = MathUtils.clamp(pos.y, worldBounds.getBottom() + getHalfHeight(), worldBounds.getTop() - getHalfHeight());  // just in case we'll want to move in vertical direction one day
+        if (getLeft() <= worldBounds.getLeft() || getRight() >= worldBounds.getRight()) {
+            v.x = 0;
+        }
+        if (getBottom() <= worldBounds.getBottom() || getTop() >= worldBounds.getTop()) {
+            v.y = 0;
+        }
     }
 }
