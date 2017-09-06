@@ -76,6 +76,7 @@ public class GameScreen extends Base2DScreen {
     private void update(float deltaTime) {
         mainShip.update(deltaTime);
         starField.update(deltaTime);
+        starField.applyScrollingX(mainShip.getVelocityX());
     }
 
     private void checkCollisions() {
