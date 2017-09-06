@@ -114,5 +114,11 @@ class MainShip extends Sprite {
         pos.mulAdd(v, deltaTime);
         pos.x = MathUtils.clamp(pos.x, worldBounds.getLeft() + getHalfWidth(), worldBounds.getRight() - getHalfWidth());
         pos.y = MathUtils.clamp(pos.y, worldBounds.getBottom() + getHalfHeight(), worldBounds.getTop() - getHalfHeight());  // just in case we'll want to move in vertical direction one day
+        if (getLeft() <= worldBounds.getLeft() || getRight() >= worldBounds.getRight()) {
+            v.x = 0;
+        }
+        if (getBottom() <= worldBounds.getBottom() || getTop() >= worldBounds.getTop()) {
+            v.y = 0;
+        }
     }
 }
