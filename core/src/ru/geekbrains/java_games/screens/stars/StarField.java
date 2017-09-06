@@ -16,6 +16,7 @@ public class StarField {
 
     public static final int DEFAULT_STARS_AMOUNT = 250;
     private static final float STAR_DEFAULT_HEIGHT = 0.01f;
+    private static final float STAR_DEFAULT_SCROLLING_FACTOR = -0.005f;
 
     Array<Star> stars;
 
@@ -45,6 +46,12 @@ public class StarField {
     public void update(float deltaTime) {
         for (int i = 0; i < stars.size; i++) {
             stars.get(i).update(deltaTime);
+        }
+    }
+
+    public void applyScrollingX(float velocityX) {
+        for (int i = 0; i < stars.size; i++) {
+            stars.get(i).setLeft(stars.get(i).getLeft() + velocityX * STAR_DEFAULT_SCROLLING_FACTOR);
         }
     }
 }
