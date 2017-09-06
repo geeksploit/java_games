@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 
 import ru.geekbrains.java_games.Background;
+import ru.geekbrains.java_games.screens.stars.StarField;
 import ru.geekuniversity.engine.Base2DScreen;
 import ru.geekuniversity.engine.Sprite2DTexture;
 import ru.geekuniversity.engine.math.Rect;
@@ -18,6 +19,7 @@ public class GameScreen extends Base2DScreen {
     private TextureAtlas atlas;
     private Background background;
     private MainShip mainShip;
+    private StarField starField;
 
     public GameScreen(Game game) {
         super(game);
@@ -30,12 +32,14 @@ public class GameScreen extends Base2DScreen {
         atlas = new TextureAtlas("textures/mainAtlas.tpack");
 
         background = new Background(new TextureRegion(textureBackground));
+        starField = new StarField(atlas);
         mainShip = new MainShip(atlas);
     }
 
     @Override
     protected void resize(Rect worldBounds) {
         background.resize(worldBounds);
+        starField.resize(worldBounds);
         mainShip.resize(worldBounds);
     }
 
@@ -71,6 +75,7 @@ public class GameScreen extends Base2DScreen {
 
     private void update(float deltaTime) {
         mainShip.update(deltaTime);
+        starField.update(deltaTime);
     }
 
     private void checkCollisions() {
@@ -86,6 +91,7 @@ public class GameScreen extends Base2DScreen {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         batch.begin();
         background.draw(batch);
+        starField.draw(batch);
         mainShip.draw(batch);
         batch.end();
     }
