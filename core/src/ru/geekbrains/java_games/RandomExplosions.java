@@ -10,7 +10,11 @@ import ru.geekuniversity.engine.math.Rect;
 
 public class RandomExplosions {
 
-    public RandomExplosions(ExplosionPool explosionPool, int i) {
+    private ExplosionPool explosionPool;
+    private float explosionTimeout;
+    private Rect worldBounds;
+
+    public RandomExplosions(ExplosionPool explosionPool, int explosionTimeout) {
     }
 
     public void resize(Rect worldBounds) {
