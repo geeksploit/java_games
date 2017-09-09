@@ -15,9 +15,12 @@ public class RandomExplosions {
     private Rect worldBounds;
 
     public RandomExplosions(ExplosionPool explosionPool, int explosionTimeout) {
+        this.explosionPool = explosionPool;
+        this.explosionTimeout = explosionTimeout;
     }
 
     public void resize(Rect worldBounds) {
+        this.worldBounds.set(worldBounds);
     }
 
     public void update(float deltaTime) {
