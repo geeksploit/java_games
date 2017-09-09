@@ -12,6 +12,7 @@ public class RandomExplosions {
 
     private ExplosionPool explosionPool;
     private float explosionTimeout;
+    private float explosionCooldown;
     private Rect worldBounds;
 
     public RandomExplosions(ExplosionPool explosionPool, int explosionTimeout) {
@@ -24,6 +25,9 @@ public class RandomExplosions {
     }
 
     public void update(float deltaTime) {
+        if ((explosionCooldown -= deltaTime) < 0) {
+            explosionCooldown = explosionTimeout;
+        }
     }
 
     public void draw(SpriteBatch batch) {
