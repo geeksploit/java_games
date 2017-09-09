@@ -48,6 +48,7 @@ public class GameScreen extends Base2DScreen {
 
         sndExplosion = Gdx.audio.newSound(Gdx.files.internal("sounds/explosion.wav"));
         backgroundMusic = Gdx.audio.newMusic(Gdx.files.internal("sounds/background_loop.mp3"));
+        backgroundMusic.setLooping(true);
         explosionPool = new ExplosionPool(atlas, sndExplosion);
 
         background = new Background(new TextureRegion(textureBackground));
