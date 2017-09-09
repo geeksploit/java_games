@@ -47,6 +47,7 @@ public class GameScreen extends Base2DScreen {
         atlas = new TextureAtlas("textures/mainAtlas.tpack");
 
         sndExplosion = Gdx.audio.newSound(Gdx.files.internal("sounds/explosion.wav"));
+        backgroundMusic = Gdx.audio.newMusic(Gdx.files.internal("sounds/background_loop.mp3"));
         explosionPool = new ExplosionPool(atlas, sndExplosion);
 
         background = new Background(new TextureRegion(textureBackground));
@@ -135,6 +136,7 @@ public class GameScreen extends Base2DScreen {
         atlas.dispose();
         bulletPool.dispose();
         sndExplosion.dispose();
+        backgroundMusic.dispose();
         super.dispose();
     }
 }
