@@ -38,9 +38,11 @@ public class RandomExplosions {
     }
 
     public void draw(SpriteBatch batch) {
-        float positionX = MathUtils.random(-worldBounds.getHalfWidth(), worldBounds.getHalfWidth());
-        float positionY = MathUtils.random(-worldBounds.getHalfHeight(), worldBounds.getHalfHeight());
-        explosionPosition.set(positionX, positionY);
-        explosionPool.obtain().set(EXPLOSION_SCALE, explosionPosition);
+        if (explosionCooldown == explosionTimeout) {
+            float positionX = MathUtils.random(-worldBounds.getHalfWidth(), worldBounds.getHalfWidth());
+            float positionY = MathUtils.random(-worldBounds.getHalfHeight(), worldBounds.getHalfHeight());
+            explosionPosition.set(positionX, positionY);
+            explosionPool.obtain().set(EXPLOSION_SCALE, explosionPosition);
+        }
     }
 }
