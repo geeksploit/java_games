@@ -20,7 +20,7 @@ public class RandomExplosions {
     }
 
     public void resize(Rect worldBounds) {
-        this.worldBounds.set(worldBounds);
+        this.worldBounds = worldBounds;
     }
 
     public void update(float deltaTime) {
