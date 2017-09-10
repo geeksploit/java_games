@@ -15,6 +15,7 @@ public class RandomEnemyShips {
     private float spawnTimeout;
     private float spawnCooldown;
     private Rect worldBounds;
+    private Enemy tmpEnemy;
 
     public RandomEnemyShips(EnemyPool spawnPool, float spawnTimeout) {
         this.spawnPool = spawnPool;
@@ -33,6 +34,10 @@ public class RandomEnemyShips {
     }
 
     public void draw(SpriteBatch batch) {
+        if (spawnCooldown == spawnTimeout) {
+            tmpEnemy = spawnPool.obtain();
+            tmpEnemy.resize(worldBounds);
+        }
         spawnPool.drawActiveObjects(batch);
     }
 
