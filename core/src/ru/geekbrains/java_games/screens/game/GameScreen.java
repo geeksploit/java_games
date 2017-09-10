@@ -48,6 +48,7 @@ public class GameScreen extends Base2DScreen {
 
         sndExplosion = Gdx.audio.newSound(Gdx.files.internal("sounds/explosion.wav"));
         explosionPool = new ExplosionPool(atlas, sndExplosion);
+        enemyPool = new EnemyPool(atlas);
 
         background = new Background(new TextureRegion(textureBackground));
         mainShip = new MainShip(atlas, bulletPool);
@@ -135,6 +136,7 @@ public class GameScreen extends Base2DScreen {
         atlas.dispose();
         bulletPool.dispose();
         sndExplosion.dispose();
+        enemyPool.dispose();
         super.dispose();
     }
 }
