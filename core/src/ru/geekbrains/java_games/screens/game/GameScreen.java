@@ -2,6 +2,7 @@ package ru.geekbrains.java_games.screens.game;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
@@ -35,6 +36,7 @@ public class GameScreen extends Base2DScreen {
 
     private Sound sndExplosion;
     private RandomExplosions randomExplosions;
+    private Music backgroundMusic;
 
     public GameScreen(Game game) {
         super(game);
@@ -47,6 +49,9 @@ public class GameScreen extends Base2DScreen {
         atlas = new TextureAtlas("textures/mainAtlas.tpack");
 
         sndExplosion = Gdx.audio.newSound(Gdx.files.internal("sounds/explosion.wav"));
+        backgroundMusic = Gdx.audio.newMusic(Gdx.files.internal("sounds/background_loop.mp3"));
+        backgroundMusic.setLooping(true);
+        backgroundMusic.play();
         explosionPool = new ExplosionPool(atlas, sndExplosion);
 
         background = new Background(new TextureRegion(textureBackground));
@@ -140,6 +145,7 @@ public class GameScreen extends Base2DScreen {
         atlas.dispose();
         bulletPool.dispose();
         sndExplosion.dispose();
+        backgroundMusic.dispose();
         super.dispose();
     }
 }
