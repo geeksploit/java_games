@@ -10,6 +10,7 @@ import com.badlogic.gdx.math.Vector2;
 
 import ru.geekbrains.java_games.Background;
 import ru.geekbrains.java_games.Explosion;
+import ru.geekbrains.java_games.RandomEnemyShips;
 import ru.geekbrains.java_games.pools.BulletPool;
 import ru.geekbrains.java_games.pools.EnemyPool;
 import ru.geekbrains.java_games.pools.ExplosionPool;
@@ -33,6 +34,7 @@ public class GameScreen extends Base2DScreen {
     private Background background;
     private final TrackingStar[] stars = new TrackingStar[STARS_COUNT];
     private MainShip mainShip;
+    private RandomEnemyShips randomEnemyShips;
 
     private Sound sndExplosion;
 
