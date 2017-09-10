@@ -115,6 +115,7 @@ public class GameScreen extends Base2DScreen {
     private void deleteAllDestroyed() {
         bulletPool.freeAllDestroyedActiveObjects();
         explosionPool.freeAllDestroyedActiveObjects();
+        enemyPool.freeAllDestroyedActiveObjects();
     }
 
     private void draw() {
