@@ -16,4 +16,8 @@ public class RandomEnemyShips {
         this.spawnTimeout = spawnTimeout;
     }
 
+    public void update(float deltaTime) {
+        spawnPool.updateActiveSprites(deltaTime);
+    }
+
 }
