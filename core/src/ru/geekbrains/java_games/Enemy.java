@@ -15,4 +15,8 @@ public class Enemy extends Ship {
         setHeightProportion(SHIP_HEIGHT);
     }
 
+    public void setVelocity(float x, float y) {
+        v.set(x, y);
+    }
+
 }
