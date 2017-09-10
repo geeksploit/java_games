@@ -70,6 +70,7 @@ public class GameScreen extends Base2DScreen {
         background.resize(worldBounds);
         for (int i = 0; i < stars.length; i++) stars[i].resize(worldBounds);
         mainShip.resize(worldBounds);
+        randomEnemyShips.resize(worldBounds);
     }
 
     @Override
@@ -109,6 +110,7 @@ public class GameScreen extends Base2DScreen {
         bulletPool.updateActiveSprites(deltaTime);
         explosionPool.updateActiveSprites(deltaTime);
         mainShip.update(deltaTime);
+        randomEnemyShips.update(deltaTime);
     }
 
     private void checkCollisions() {
@@ -130,6 +132,7 @@ public class GameScreen extends Base2DScreen {
         bulletPool.drawActiveObjects(batch);
         explosionPool.drawActiveObjects(batch);
         mainShip.draw(batch);
+        randomEnemyShips.draw(batch);
         batch.end();
     }
 
