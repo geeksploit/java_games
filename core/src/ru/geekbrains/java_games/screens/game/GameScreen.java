@@ -54,6 +54,7 @@ public class GameScreen extends Base2DScreen {
 
         background = new Background(new TextureRegion(textureBackground));
         mainShip = new MainShip(atlas, bulletPool);
+        randomEnemyShips = new RandomEnemyShips(enemyPool, 1);
 
         TextureRegion starRegion = atlas.findRegion("star");
         for (int i = 0; i < stars.length; i++) {
