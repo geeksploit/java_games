@@ -10,6 +10,7 @@ import com.badlogic.gdx.math.Vector2;
 
 import ru.geekbrains.java_games.Background;
 import ru.geekbrains.java_games.Explosion;
+import ru.geekbrains.java_games.RandomExplosions;
 import ru.geekbrains.java_games.pools.BulletPool;
 import ru.geekbrains.java_games.pools.ExplosionPool;
 import ru.geekbrains.java_games.screens.stars.TrackingStar;
@@ -33,6 +34,7 @@ public class GameScreen extends Base2DScreen {
     private MainShip mainShip;
 
     private Sound sndExplosion;
+    private RandomExplosions randomExplosions;
 
     public GameScreen(Game game) {
         super(game);
@@ -57,6 +59,8 @@ public class GameScreen extends Base2DScreen {
             float starHeight = STAR_HEIGHT * Rnd.nextFloat(0.75f, 1f);
             stars[i] = new TrackingStar(starRegion, vx, vy, starHeight, mainShip.getV());
         }
+
+        randomExplosions = new RandomExplosions(explosionPool, 3);
     }
 
     @Override
@@ -64,6 +68,7 @@ public class GameScreen extends Base2DScreen {
         background.resize(worldBounds);
         for (int i = 0; i < stars.length; i++) stars[i].resize(worldBounds);
         mainShip.resize(worldBounds);
+        randomExplosions.resize(worldBounds);
     }
 
     @Override
@@ -103,6 +108,7 @@ public class GameScreen extends Base2DScreen {
         bulletPool.updateActiveSprites(deltaTime);
         explosionPool.updateActiveSprites(deltaTime);
         mainShip.update(deltaTime);
+        randomExplosions.update(deltaTime);
     }
 
     private void checkCollisions() {
@@ -120,6 +126,7 @@ public class GameScreen extends Base2DScreen {
         batch.begin();
         background.draw(batch);
         for (int i = 0; i < stars.length; i++) stars[i].draw(batch);
+        randomExplosions.draw(batch);
         bulletPool.drawActiveObjects(batch);
         explosionPool.drawActiveObjects(batch);
         mainShip.draw(batch);
