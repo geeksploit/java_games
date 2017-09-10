@@ -41,6 +41,7 @@ public class RandomEnemyShips {
             tmpEnemy.setAngle(180);
             tmpEnemy.setVelocity(MathUtils.random(-0.1f, 0.1f), -MathUtils.random(0.25f, 0.5f));
             tmpEnemy.setBottom(worldBounds.getTop());
+            tmpEnemy.setLeft(MathUtils.random(worldBounds.getLeft(), worldBounds.getRight()) / 2);
         }
         spawnPool.drawActiveObjects(batch);
     }
