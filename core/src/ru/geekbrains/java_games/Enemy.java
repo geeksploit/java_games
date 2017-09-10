@@ -18,6 +18,7 @@ public class Enemy extends Ship {
     @Override
     public void update(float deltaTime) {
         pos.mulAdd(v, deltaTime);
+        if(isOutside(worldBounds)) destroy();
     }
 
     public void setVelocity(float x, float y) {
