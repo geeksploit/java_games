@@ -25,4 +25,8 @@ public class EnemyPool extends SpritesPool<Enemy> {
         return new Enemy(textureRegion);
     }
 
+    @Override
+    protected void debugLog() {
+        System.out.println(getClass().getSimpleName() + " change active/free: " + activeObjects.size() + "/" + freeObjects.size());
+    }
 }
