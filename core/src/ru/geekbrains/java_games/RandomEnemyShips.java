@@ -12,6 +12,7 @@ public class RandomEnemyShips {
 
     private EnemyPool spawnPool;
     private float spawnTimeout;
+    private float spawnCooldown;
 
     public RandomEnemyShips(EnemyPool spawnPool, float spawnTimeout) {
         this.spawnPool = spawnPool;
@@ -19,6 +20,9 @@ public class RandomEnemyShips {
     }
 
     public void update(float deltaTime) {
+        if ((spawnCooldown -= deltaTime) < 0) {
+            spawnCooldown = spawnTimeout;
+        }
         spawnPool.updateActiveSprites(deltaTime);
     }
 
