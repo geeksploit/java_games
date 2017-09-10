@@ -40,6 +40,7 @@ public class RandomEnemyShips {
             tmpEnemy.resize(worldBounds);
             tmpEnemy.setAngle(180);
             tmpEnemy.setVelocity(MathUtils.random(-0.1f, 0.1f), -MathUtils.random(0.25f, 0.5f));
+            tmpEnemy.setBottom(worldBounds.getTop());
         }
         spawnPool.drawActiveObjects(batch);
     }
