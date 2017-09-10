@@ -8,8 +8,11 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 public class Enemy extends Ship {
 
+    private static final float SHIP_HEIGHT = 0.15f;
+
     public Enemy(TextureRegion region) {
         super(region, 1, 2, 2);
+        setHeightProportion(SHIP_HEIGHT);
     }
 
 }
