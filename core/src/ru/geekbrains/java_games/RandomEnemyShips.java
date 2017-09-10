@@ -37,6 +37,7 @@ public class RandomEnemyShips {
         if (spawnCooldown == spawnTimeout) {
             tmpEnemy = spawnPool.obtain();
             tmpEnemy.resize(worldBounds);
+            tmpEnemy.setAngle(180);
         }
         spawnPool.drawActiveObjects(batch);
     }
