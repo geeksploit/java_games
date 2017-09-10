@@ -1,6 +1,7 @@
 package ru.geekbrains.java_games;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.MathUtils;
 
 import ru.geekbrains.java_games.pools.EnemyPool;
 import ru.geekuniversity.engine.math.Rect;
@@ -38,6 +39,7 @@ public class RandomEnemyShips {
             tmpEnemy = spawnPool.obtain();
             tmpEnemy.resize(worldBounds);
             tmpEnemy.setAngle(180);
+            tmpEnemy.setVelocity(MathUtils.random(-0.1f, 0.1f), -MathUtils.random(0.25f, 0.5f));
         }
         spawnPool.drawActiveObjects(batch);
     }
