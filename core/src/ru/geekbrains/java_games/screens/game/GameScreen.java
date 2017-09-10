@@ -11,6 +11,7 @@ import com.badlogic.gdx.math.Vector2;
 import ru.geekbrains.java_games.Background;
 import ru.geekbrains.java_games.Explosion;
 import ru.geekbrains.java_games.pools.BulletPool;
+import ru.geekbrains.java_games.pools.EnemyPool;
 import ru.geekbrains.java_games.pools.ExplosionPool;
 import ru.geekbrains.java_games.screens.stars.TrackingStar;
 import ru.geekuniversity.engine.Base2DScreen;
@@ -25,6 +26,7 @@ public class GameScreen extends Base2DScreen {
 
     private final BulletPool bulletPool = new BulletPool();
     private ExplosionPool explosionPool;
+    private EnemyPool enemyPool;
 
     private Sprite2DTexture textureBackground;
     private TextureAtlas atlas;
