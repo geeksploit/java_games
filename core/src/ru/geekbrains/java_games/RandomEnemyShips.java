@@ -1,5 +1,7 @@
 package ru.geekbrains.java_games;
 
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+
 import ru.geekbrains.java_games.pools.EnemyPool;
 
 /**
@@ -18,6 +20,10 @@ public class RandomEnemyShips {
 
     public void update(float deltaTime) {
         spawnPool.updateActiveSprites(deltaTime);
+    }
+
+    public void draw(SpriteBatch batch) {
+        spawnPool.drawActiveObjects(batch);
     }
 
 }
