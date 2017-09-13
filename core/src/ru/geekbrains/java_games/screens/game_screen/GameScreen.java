@@ -1,4 +1,4 @@
-package ru.geekbrains.java_games.screens.game;
+package ru.geekbrains.java_games.screens.game_screen;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
@@ -9,11 +9,13 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 
-import ru.geekbrains.java_games.Background;
-import ru.geekbrains.java_games.Explosion;
-import ru.geekbrains.java_games.pools.BulletPool;
-import ru.geekbrains.java_games.pools.ExplosionPool;
-import ru.geekbrains.java_games.screens.stars.TrackingStar;
+import ru.geekbrains.java_games.common.Background;
+import ru.geekbrains.java_games.common.enemies.EnemiesEmitter;
+import ru.geekbrains.java_games.common.enemies.EnemyPool;
+import ru.geekbrains.java_games.common.explosions.Explosion;
+import ru.geekbrains.java_games.common.bullets.BulletPool;
+import ru.geekbrains.java_games.common.explosions.ExplosionPool;
+import ru.geekbrains.java_games.common.stars.TrackingStar;
 import ru.geekuniversity.engine.Base2DScreen;
 import ru.geekuniversity.engine.Sprite2DTexture;
 import ru.geekuniversity.engine.math.Rect;
@@ -24,17 +26,21 @@ public class GameScreen extends Base2DScreen {
     private static final int STARS_COUNT = 50;
     private static final float STAR_HEIGHT = 0.01f;
 
-    private final BulletPool bulletPool = new BulletPool();
+    private BulletPool bulletPool;
     private ExplosionPool explosionPool;
+    private EnemyPool enemyPool;
 
     private Sprite2DTexture textureBackground;
     private TextureAtlas atlas;
     private Background background;
     private final TrackingStar[] stars = new TrackingStar[STARS_COUNT];
     private MainShip mainShip;
+    EnemiesEmitter enemiesEmitter;
 
-    private Sound sndExplosion;
     private Music music;
+    private Sound sndLaser;
+    private Sound sndBullet;
+    private Sound sndExplosion;
 
     public GameScreen(Game game) {
         super(game);
@@ -43,15 +49,23 @@ public class GameScreen extends Base2DScreen {
     @Override
     public void show() {
         super.show();
+
+        music = Gdx.audio.newMusic(Gdx.files.internal("sounds/music.mp3"));
+        sndBullet = Gdx.audio.newSound(Gdx.files.internal("sounds/bullet.wav"));
+        sndLaser = Gdx.audio.newSound(Gdx.files.internal("sounds/laser.wav"));
+        sndExplosion = Gdx.audio.newSound(Gdx.files.internal("sounds/explosion.wav"));
+
         textureBackground = new Sprite2DTexture("textures/bg.png");
         atlas = new TextureAtlas("textures/mainAtlas.tpack");
 
-        sndExplosion = Gdx.audio.newSound(Gdx.files.internal("sounds/explosion.wav"));
+        bulletPool = new BulletPool();
         explosionPool = new ExplosionPool(atlas, sndExplosion);
+        mainShip = new MainShip(atlas, bulletPool, explosionPool, worldBounds, sndLaser);
+        enemyPool = new EnemyPool(bulletPool, explosionPool, worldBounds, mainShip);
+
+        enemiesEmitter = new EnemiesEmitter(enemyPool, worldBounds, atlas, sndBullet);
 
         background = new Background(new TextureRegion(textureBackground));
-        mainShip = new MainShip(atlas, bulletPool);
-
         TextureRegion starRegion = atlas.findRegion("star");
         for (int i = 0; i < stars.length; i++) {
             float vx = Rnd.nextFloat(-0.005f, 0.005f);
@@ -60,7 +74,6 @@ public class GameScreen extends Base2DScreen {
             stars[i] = new TrackingStar(starRegion, vx, vy, starHeight, mainShip.getV());
         }
 
-        music = Gdx.audio.newMusic(Gdx.files.internal("sounds/music.mp3"));
         music.setLooping(true);
         music.play();
     }
@@ -75,8 +88,8 @@ public class GameScreen extends Base2DScreen {
     @Override
     protected void touchDown(Vector2 touch, int pointer) {
         mainShip.touchDown(touch, pointer);
-        Explosion explosion = explosionPool.obtain();
-        explosion.set(0.1f, touch);
+//        Explosion explosion = explosionPool.obtain();
+//        explosion.set(0.1f, touch);
     }
 
     @Override
@@ -104,19 +117,21 @@ public class GameScreen extends Base2DScreen {
         draw();
     }
 
-    private float randomBoomInterval = 3f;
-    private float randomBoomTimer;
-    private final Vector2 randomBoomPos = new Vector2();
+//    private float randomBoomInterval = 3f;
+//    private float randomBoomTimer;
+//    private final Vector2 randomBoomPos = new Vector2();
 
     private void update(float deltaTime) {
-        randomBoomTimer += deltaTime;
-        if(randomBoomTimer >= randomBoomInterval) {
-            randomBoomTimer = 0f;
-            Explosion explosion = explosionPool.obtain();
-            randomBoomPos.x = Rnd.nextFloat(worldBounds.getLeft(), worldBounds.getRight());
-            randomBoomPos.y = Rnd.nextFloat(worldBounds.getBottom(), worldBounds.getTop());
-            explosion.set(0.1f, randomBoomPos);
-        }
+//        randomBoomTimer += deltaTime;
+//        if(randomBoomTimer >= randomBoomInterval) {
+//            randomBoomTimer = 0f;
+//            Explosion explosion = explosionPool.obtain();
+//            randomBoomPos.x = Rnd.nextFloat(worldBounds.getLeft(), worldBounds.getRight());
+//            randomBoomPos.y = Rnd.nextFloat(worldBounds.getBottom(), worldBounds.getTop());
+//            explosion.set(0.1f, randomBoomPos);
+//        }
+        enemiesEmitter.generateEnemies(deltaTime);
+        enemyPool.updateActiveSprites(deltaTime);
         for (int i = 0; i < stars.length; i++) stars[i].update(deltaTime);
         bulletPool.updateActiveSprites(deltaTime);
         explosionPool.updateActiveSprites(deltaTime);
@@ -139,6 +154,7 @@ public class GameScreen extends Base2DScreen {
         background.draw(batch);
         for (int i = 0; i < stars.length; i++) stars[i].draw(batch);
         bulletPool.drawActiveObjects(batch);
+        enemyPool.drawActiveObjects(batch);
         explosionPool.drawActiveObjects(batch);
         mainShip.draw(batch);
         batch.end();
@@ -146,12 +162,15 @@ public class GameScreen extends Base2DScreen {
 
     @Override
     public void dispose() {
+        music.dispose();
+        sndBullet.dispose();
+        sndLaser.dispose();
+        sndExplosion.dispose();
+
+        bulletPool.dispose();
         explosionPool.dispose();
         textureBackground.dispose();
         atlas.dispose();
-        bulletPool.dispose();
-        sndExplosion.dispose();
-        music.dispose();
         super.dispose();
     }
 }

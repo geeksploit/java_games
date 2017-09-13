@@ -1,24 +1,26 @@
-package ru.geekbrains.java_games.screens.game;
+package ru.geekbrains.java_games.screens.game_screen;
 
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.Vector2;
 
-import ru.geekbrains.java_games.Ship;
-import ru.geekbrains.java_games.pools.BulletPool;
+import ru.geekbrains.java_games.common.Ship;
+import ru.geekbrains.java_games.common.bullets.BulletPool;
+import ru.geekbrains.java_games.common.explosions.ExplosionPool;
 import ru.geekuniversity.engine.math.Rect;
 
-class MainShip extends Ship {
+public class MainShip extends Ship {
 
     private static final float SHIP_HEIGHT = 0.15f;
     private static final float  BOTTOM_MARGIN = 0.05f;
 
     private final Vector2 v0 = new Vector2(0.5f, 0f);
 
-    MainShip(TextureAtlas atlas, BulletPool bulletPool) {
-        super(atlas.findRegion("main_ship"), 1, 2, 2);
+    MainShip(TextureAtlas atlas, BulletPool bulletPool, ExplosionPool explosionPool, Rect worldBounds, Sound bulletSound) {
+        super(atlas.findRegion("main_ship"), 1, 2, 2, bulletPool, explosionPool, worldBounds);
+        this.bulletSound = bulletSound;
         setHeightProportion(SHIP_HEIGHT);
-        this.bulletPool = bulletPool;
         bulletRegion = atlas.findRegion("bulletMainShip");
         bulletHeight = 0.01f;
         reloadInterval = 0.15f;

@@ -1,4 +1,4 @@
-package ru.geekbrains.java_games;
+package ru.geekbrains.java_games.common.bullets;
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
@@ -13,7 +13,7 @@ public class Bullet extends Sprite {
     private int damage;
     private Object owner;
 
-    public Bullet() {
+    Bullet() {
         regions = new TextureRegion[1];
     }
 
@@ -33,7 +33,6 @@ public class Bullet extends Sprite {
         setHeightProportion(height);
         this.worldBounds = worldBounds;
         this.damage = damage;
-
     }
 
     @Override
