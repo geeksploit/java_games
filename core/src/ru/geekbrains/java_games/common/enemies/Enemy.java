@@ -59,6 +59,10 @@ public class Enemy extends Ship {
     @Override
     public void update(float deltaTime) {
         super.update(deltaTime);
+        if (getBottom() <= worldBounds.getBottom()) {
+            explosionPool.obtain().set(getHeight(), pos);
+            destroy();
+        }
         if ((reloadTimer -= deltaTime) < 0) {
             reloadTimer = reloadInterval;
             shoot();
@@ -96,12 +100,4 @@ public class Enemy extends Ship {
 //        return !(bullet.getRight() < getLeft() || bullet.getLeft() > getRight() || bullet.getBottom() > getTop() || bullet.getTop() < pos.y);
 //    }
 
-    @Override
-    public void update(float deltaTime) {
-        super.update(deltaTime);
-        if (getBottom() <= worldBounds.getBottom()) {
-            explosionPool.obtain().set(getHeight(), pos);
-            destroy();
-        }
-    }
 }
