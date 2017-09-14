@@ -54,6 +54,15 @@ public class Enemy extends Ship {
 //        state = State.DESCENT;
     }
 
+    @Override
+    public void update(float deltaTime) {
+        super.update(deltaTime);
+        if ((reloadTimer -= deltaTime) < 0) {
+            reloadTimer = reloadInterval;
+            shoot();
+        }
+    }
+
 //    @Override
 //    public void update(float deltaTime) {
 //        super.update(deltaTime);
