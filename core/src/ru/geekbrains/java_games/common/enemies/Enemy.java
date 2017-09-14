@@ -17,12 +17,14 @@ public class Enemy extends Ship {
 //    private final Vector2 descentV = new Vector2(0f, -0.15f);
     private final Vector2 v0 = new Vector2();
     private final MainShip mainShip;
+    BulletPool bulletPool;
 //    private State state;
 
     Enemy(BulletPool bulletPool, ExplosionPool explosionPool, Rect worldBounds, MainShip mainShip) {
         super(bulletPool, explosionPool, worldBounds);
         this.mainShip = mainShip;
         v.set(v0);
+        this.bulletPool = bulletPool;
     }
 
     void set(
