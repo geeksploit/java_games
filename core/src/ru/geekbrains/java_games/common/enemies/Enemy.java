@@ -89,6 +89,7 @@ public class Enemy extends Ship {
     public void update(float deltaTime) {
         super.update(deltaTime);
         if (getBottom() <= worldBounds.getBottom()) {
+            explosionPool.obtain().set(getHeight(), pos);
             destroy();
         }
     }
