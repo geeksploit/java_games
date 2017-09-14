@@ -17,12 +17,14 @@ public class Enemy extends Ship {
 //    private final Vector2 descentV = new Vector2(0f, -0.15f);
     private final Vector2 v0 = new Vector2();
     private final MainShip mainShip;
+    private ExplosionPool explosionPool;
 //    private State state;
 
     Enemy(BulletPool bulletPool, ExplosionPool explosionPool, Rect worldBounds, MainShip mainShip) {
         super(bulletPool, explosionPool, worldBounds);
         this.mainShip = mainShip;
         v.set(v0);
+        this.explosionPool = explosionPool;
     }
 
     void set(
@@ -82,4 +84,13 @@ public class Enemy extends Ship {
 //    public boolean isBulletCollision (Rect bullet) {
 //        return !(bullet.getRight() < getLeft() || bullet.getLeft() > getRight() || bullet.getBottom() > getTop() || bullet.getTop() < pos.y);
 //    }
+
+    @Override
+    public void update(float deltaTime) {
+        super.update(deltaTime);
+        if (getBottom() <= worldBounds.getBottom()) {
+            explosionPool.obtain().set(getHeight(), pos);
+            destroy();
+        }
+    }
 }
