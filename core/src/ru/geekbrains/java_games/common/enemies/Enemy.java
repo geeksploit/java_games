@@ -2,9 +2,11 @@ package ru.geekbrains.java_games.common.enemies;
 
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Matrix3;
 import com.badlogic.gdx.math.Vector2;
 
 import ru.geekbrains.java_games.common.Ship;
+import ru.geekbrains.java_games.common.bullets.Bullet;
 import ru.geekbrains.java_games.common.bullets.BulletPool;
 import ru.geekbrains.java_games.common.explosions.ExplosionPool;
 import ru.geekbrains.java_games.screens.game_screen.MainShip;
@@ -19,6 +21,7 @@ public class Enemy extends Ship {
     private final MainShip mainShip;
     private ExplosionPool explosionPool;
     BulletPool bulletPool;
+    Vector2 shootDirection;
 //    private State state;
 
     Enemy(BulletPool bulletPool, ExplosionPool explosionPool, Rect worldBounds, MainShip mainShip) {
@@ -27,6 +30,7 @@ public class Enemy extends Ship {
         v.set(v0);
         this.explosionPool = explosionPool;
         this.bulletPool = bulletPool;
+        shootDirection = new Vector2();
     }
 
     void set(
@@ -65,6 +69,8 @@ public class Enemy extends Ship {
         }
         if ((reloadTimer -= deltaTime) < 0) {
             reloadTimer = reloadInterval;
+            shootDirection.set(mainShip.pos.x - pos.x, mainShip.pos.y - pos.y);
+            bulletV.setAngle(shootDirection.angle());
             shoot();
         }
         if (
