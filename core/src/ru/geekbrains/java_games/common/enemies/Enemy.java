@@ -52,6 +52,10 @@ public class Enemy extends Ship {
 //        state = State.DESCENT;
     }
 
+    private void mainShipCollisionHandler() {
+        System.out.println("An enemy ship has collided with the main ship.");
+    }
+
 //    @Override
 //    public void update(float deltaTime) {
 //        super.update(deltaTime);
