@@ -67,6 +67,18 @@ public class Enemy extends Ship {
             reloadTimer = reloadInterval;
             shoot();
         }
+        if (
+                getBottom() <= mainShip.getTop() &&
+                getBottom() >= mainShip.getBottom() &&
+                getLeft() >= mainShip.getLeft() &&
+                getLeft() <= mainShip.getRight()
+            ) {
+            mainShipCollisionHandler();
+    	}
+    }
+
+    private void mainShipCollisionHandler() {
+        System.out.println("An enemy ship has collided with the main ship.");
     }
 
 //    @Override
