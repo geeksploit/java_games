@@ -18,6 +18,7 @@ public class Enemy extends Ship {
     private final Vector2 v0 = new Vector2();
     private final MainShip mainShip;
     private ExplosionPool explosionPool;
+    BulletPool bulletPool;
 //    private State state;
 
     Enemy(BulletPool bulletPool, ExplosionPool explosionPool, Rect worldBounds, MainShip mainShip) {
@@ -25,6 +26,7 @@ public class Enemy extends Ship {
         this.mainShip = mainShip;
         v.set(v0);
         this.explosionPool = explosionPool;
+        this.bulletPool = bulletPool;
     }
 
     void set(
@@ -52,6 +54,15 @@ public class Enemy extends Ship {
         reloadTimer = reloadInterval;
         v.set(v0);
 //        state = State.DESCENT;
+    }
+
+    @Override
+    public void update(float deltaTime) {
+        super.update(deltaTime);
+        if ((reloadTimer -= deltaTime) < 0) {
+            reloadTimer = reloadInterval;
+            shoot();
+        }
     }
 
 //    @Override
